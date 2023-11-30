@@ -13,8 +13,8 @@ github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0U
 github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.1 h1:6UKoz5ujsI55KNpsJH3UwCq3T8kKbZwNZBNPuTTje8U=
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.1/go.mod h1:YvJ2f6MplWDhfxiUC3KpyTy76kYUZA4W3pTv/wdKQ9Y=
-github.com/irisco88/protos v1.1.22 h1:8PWzfmV8zjeUuZ90evgmX7XNcxRvXg6qcVwIbMyDvrQ=
-github.com/irisco88/protos v1.1.22/go.mod h1:tF7Xs39vDxzh/bjDjkCcEAGUiPeJKrNP3dIVWexcQkI=
+github.com/irisco88/protos v1.1.31 h1:dvYJSya38IXJJvR2zeKvptXoV107c9PASaYPiFBIGLU=
+github.com/irisco88/protos v1.1.31/go.mod h1:tF7Xs39vDxzh/bjDjkCcEAGUiPeJKrNP3dIVWexcQkI=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=

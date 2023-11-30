@@ -94,6 +94,11 @@ func main() {
 					}))
 					opts := []grpc.DialOption{
 						grpc.WithTransportCredentials(insecure.NewCredentials()),
+						grpc.WithInsecure(),
+						grpc.WithMaxMsgSize(1024 * 1024 * 1024 * 1024),
+						grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(1024 * 1204 * 1024 * 1024)),
+						//grpc.FailOnNonTempDialError(true),
+						//grpc.WithTimeout(10 * time.Second),
 					}
 
 					// Register TrackingService gRPC service endpoint

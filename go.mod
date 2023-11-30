@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.18.1
-	github.com/irisco88/protos v1.1.22
+	github.com/irisco88/protos v1.1.31
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20220101234140-673ab2c3ae75
 	github.com/urfave/cli/v2 v2.25.7
 	go.uber.org/zap v1.24.0
