@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	imeispb "github.com/irisco88/protos/gen/imeis/v1"
 	trkpb "github.com/irisco88/protos/gen/tracking/v1"
 	userpb "github.com/irisco88/protos/gen/user/v1"
 	"github.com/tmc/grpc-websocket-proxy/wsproxy"
@@ -23,11 +24,13 @@ import (
 )
 
 var (
-	ServiceHost      string
-	ServicePort      uint
-	TrackingEndPoint string
-	UserEndPoint     string
-	UserHttpEndPoint string
+	ServiceHost       string
+	ServicePort       uint
+	TrackingEndPoint  string
+	UserEndPoint      string
+	ImeisEndPoint     string
+	UserHttpEndPoint  string
+	ImeisHttpEndPoint string
 )
 
 func main() {
@@ -75,10 +78,24 @@ func main() {
 						Required:    true,
 					},
 					&cli.StringFlag{
+						Name:        "imeis",
+						Usage:       "imeis endpoint address",
+						Destination: &ImeisEndPoint,
+						EnvVars:     []string{"IMEIS_ENDPOINT"},
+						Required:    true,
+					},
+					&cli.StringFlag{
 						Name:        "user-http",
 						Usage:       "user http endpoint address",
 						Destination: &UserHttpEndPoint,
 						EnvVars:     []string{"USER_HTTP_ENDPOINT"},
+						Required:    true,
+					},
+					&cli.StringFlag{
+						Name:        "imeis-http",
+						Usage:       "imeis http endpoint address",
+						Destination: &ImeisHttpEndPoint,
+						EnvVars:     []string{"IMEIS_HTTP_ENDPOINT"},
 						Required:    true,
 					},
 				},
@@ -109,7 +126,9 @@ func main() {
 					if e := userpb.RegisterUserServiceHandlerFromEndpoint(ctx.Context, gwMux, UserEndPoint, opts); e != nil {
 						return fmt.Errorf("failed to register user: %v", e.Error())
 					}
-
+					if e := imeispb.RegisterImeisServiceHandlerFromEndpoint(ctx.Context, gwMux, ImeisEndPoint, opts); e != nil {
+						return fmt.Errorf("failed to register imeis: %v", e.Error())
+					}
 					httpServer := &http.Server{
 						Addr: gatewayAddr,
 						Handler: wsproxy.WebsocketProxy(gwMux, wsproxy.WithForwardedHeaders(func(header string) bool {
@@ -117,6 +136,9 @@ func main() {
 						})),
 					}
 					if e := AddUserHTTPMethods(UserHttpEndPoint, gwMux); e != nil {
+						return e
+					}
+					if e := AddImeisHTTPMethods(ImeisHttpEndPoint, gwMux); e != nil {
 						return e
 					}
 					go func() {
@@ -162,5 +184,23 @@ func AddUserHTTPMethods(userHttpEndpoint string, mux *runtime.ServeMux) error {
 	if e := mux.HandlePath("POST", "/api/v1/user/avatar/upload", forwardMethod); e != nil {
 		return e
 	}
+	return nil
+}
+func AddImeisHTTPMethods(imeisHttpEndpoint string, mux *runtime.ServeMux) error {
+	//targetURL, err := url.Parse(imeisHttpEndpoint)
+	//if err != nil {
+	//	log.Fatalf("Failed to parse target URL: %v", err)
+	//}
+	//proxy := httputil.NewSingleHostReverseProxy(targetURL)
+	//forwardMethod := func(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
+	//	proxy.ServeHTTP(w, r)
+	//}
+
+	//if e := mux.HandlePath("GET", "/api/v1/imeis/avatar/download/{code}", forwardMethod); e != nil {
+	//	return e
+	//}
+	//if e := mux.HandlePath("POST", "/api/v1/imeis/avatar/upload", forwardMethod); e != nil {
+	//	return e
+	//}
 	return nil
 }
